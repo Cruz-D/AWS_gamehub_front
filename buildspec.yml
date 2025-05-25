@@ -4,12 +4,13 @@ phases:
   install:
     runtime-versions:
       dotnet: 8.0
+
   build:
     commands:
       - echo "Publicando aplicación..."
       - dotnet publish AWS_gamehub_front.csproj -c Release -r linux-x64 --self-contained false -o publish
-      - cd publish
-      - zip -r ../app.zip .  # Zip solo el contenido
+
 artifacts:
+  base-directory: publish
   files:
-    - app.zip
+    - '**/*'
