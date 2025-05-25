@@ -35,7 +35,7 @@ namespace AWS_gamehub_front.Controllers
             try
             {
                 var loginResult = await _authService.LoginAsync(model);
-
+                //comentarios
                 if (loginResult != null && !string.IsNullOrEmpty(loginResult.accessToken))
                 {
                     // Guardar el JWT en una cookie segura y httpOnly
