@@ -7,11 +7,9 @@ phases:
   build:
     commands:
       - echo "Publicando aplicación..."
-      - dotnet publish AWS_gamehub_front.csproj -c Release -r linux-x64 --self-contained false -o app
-      - echo "Comprimiendo archivos para Elastic Beanstalk..."
-      - cd app
-      - zip -r ../app.zip .
-      - cd ..
+      - dotnet publish AWS_gamehub_front.csproj -c Release -r linux-x64 --self-contained false -o publish
+      - cd publish
+      - zip -r ../app.zip .  # Zip solo el contenido
 artifacts:
   files:
     - app.zip
