@@ -6,11 +6,12 @@ phases:
       dotnet: 8.0
   build:
     commands:
-      - echo "Restaurando dependencias..."
-      - dotnet restore
       - echo "Publicando aplicación..."
-      - dotnet publish AWS_gamehub_front.csproj -c Release -r linux-x64 --self-contained false -o publish
+      - dotnet publish AWS_gamehub_front.csproj -c Release -r linux-x64 --self-contained false -o app
+      - echo "Comprimiendo archivos para Elastic Beanstalk..."
+      - cd app
+      - zip -r ../app.zip .
+      - cd ..
 artifacts:
-  base-directory: publish
   files:
-    - '**/*'
+    - app.zip
