@@ -1,12 +1,17 @@
 ﻿version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      dotnet: 8.0
   build:
     commands:
+      - echo "Restaurando dependencias..."
+      - dotnet restore
       - echo "Publicando aplicación..."
       - dotnet publish AWS_gamehub_front.csproj -c Release -r linux-x64 --self-contained false -o publish
-
+      - echo "Empaquetando artefactos..."
+      - zip -r publish.zip publish/
 artifacts:
-  base-directory: publish
   files:
-    - '**/*'
+    - publish.zip
