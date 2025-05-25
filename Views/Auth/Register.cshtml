@@ -1,0 +1,102 @@
+﻿@model RegisterDto
+
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<div style="width: 90%; margin: 40px auto 0 auto;">
+    <div class="card p-4 shadow-lg" style="background: #23272f; color: #fff; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);">
+        <div class="text-center mb-4">
+            <i class="fa-solid fa-user-plus fa-2x mb-2" style="color: #ffc107;"></i>
+            <h2 class="mb-0" style="font-weight: 700;">Registro de Usuario</h2>
+        </div>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-info text-center">@ViewBag.Message</div>
+        }
+
+        <form asp-action="Register" method="post" autocomplete="off">
+
+            <!-- Grupo: Datos de acceso -->
+            <h5 class="mb-3 mt-2" style="color:#ffb347;">
+                <i class="fa-solid fa-key"></i> Datos de acceso
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="Username" class="form-label"><i class="fa-solid fa-user"></i> Usuario</label>
+                    <input asp-for="Username" class="form-control bg-dark text-white border-0" />
+                    <span asp-validation-for="Username" class="text-warning"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label"><i class="fa-solid fa-envelope"></i> Email</label>
+                    <input asp-for="Email" class="form-control bg-dark text-white border-0" />
+                    <span asp-validation-for="Email" class="text-warning"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Password" class="form-label"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input asp-for="Password" class="form-control bg-dark text-white border-0" type="password" />
+                    <span asp-validation-for="Password" class="text-warning"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="RepeatPassword" class="form-label"><i class="fa-solid fa-lock"></i> Repetir contraseña</label>
+                    <input asp-for="RepeatPassword" class="form-control bg-dark text-white border-0" type="password" />
+                    <span asp-validation-for="RepeatPassword" class="text-warning"></span>
+                </div>
+                
+            </div>
+
+            <hr style="border-color: #444;" />
+
+            <!-- Grupo: Datos personales -->
+            <h5 class="mb-3 mt-2" style="color:#ffb347;">
+                <i class="fa-solid fa-id-card"></i> Datos personales
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="FirstName" class="form-label"><i class="fa-solid fa-user"></i> Nombre</label>
+                    <input asp-for="FirstName" class="form-control bg-dark text-white border-0" />
+                    <span asp-validation-for="FirstName" class="text-warning"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="LastName" class="form-label"><i class="fa-solid fa-user"></i> Apellido</label>
+                    <input asp-for="LastName" class="form-control bg-dark text-white border-0" />
+                    <span asp-validation-for="LastName" class="text-warning"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="DateOfBirth" class="form-label"><i class="fa-solid fa-calendar"></i> Fecha de nacimiento</label>
+                    <input asp-for="DateOfBirth" class="form-control bg-dark text-white border-0" type="date" />
+                    <span asp-validation-for="DateOfBirth" class="text-warning"></span>
+                </div>
+
+            </div>
+            <hr style="border-color: #444;" />
+
+            <!-- Grupo: Ubicación -->
+            <h5 class="mb-3 mt-2" style="color:#ffb347;">
+                <i class="fa-solid fa-location-dot"></i> Ubicación
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="Country" class="form-label"><i class="fa-solid fa-flag"></i> País</label>
+                    <input asp-for="Country" class="form-control bg-dark text-white border-0" />
+                    <span asp-validation-for="Country" class="text-warning"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="City" class="form-label"><i class="fa-solid fa-city"></i> Ciudad</label>
+                    <input asp-for="City" class="form-control bg-dark text-white border-0" />
+                    <span asp-validation-for="City" class="text-warning"></span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-warning btn-lg fw-bold px-5">
+                    <i class="fa-solid fa-user-plus"></i> Registrarse
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

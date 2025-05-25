@@ -1,0 +1,51 @@
+﻿@model AWS_gamehub_front.Models.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div style="width: 90%; margin: 40px auto 0 auto;">
+    <div class="card p-4 shadow-lg" style="background: #23272f; color: #fff; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);">
+        <div class="text-center mb-4">
+            <i class="fa-solid fa-right-to-bracket fa-2x mb-2" style="color: #ffc107;"></i>
+            <h2 class="mb-0" style="font-weight: 700;">Iniciar sesión</h2>
+        </div>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-info text-center">@ViewBag.Message</div>
+        }
+
+        <form asp-action="Login" method="post" autocomplete="off">
+            <div class="row g-3 mb-4">
+                <div class="col-12">
+                    <label asp-for="UsernameOrEmail" class="form-label">
+                        <i class="fa-solid fa-user"></i> Usuario o Email
+                    </label>
+                    <input asp-for="UsernameOrEmail" class="form-control bg-dark text-white border-0" />
+                    <span asp-validation-for="UsernameOrEmail" class="text-warning"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Password" class="form-label">
+                        <i class="fa-solid fa-lock"></i> Contraseña
+                    </label>
+                    <input asp-for="Password" class="form-control bg-dark text-white border-0" type="password" />
+                    <span asp-validation-for="Password" class="text-warning"></span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-warning btn-lg fw-bold px-5">
+                    <i class="fa-solid fa-right-to-bracket"></i> Entrar
+                </button>
+            </div>
+        </form>
+        <div class="text-center mt-4">
+            <span>¿No tienes cuenta?</span>
+            <a href="@Url.Action("Register", "Auth")" class="link-warning fw-bold ms-1">Regístrate</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

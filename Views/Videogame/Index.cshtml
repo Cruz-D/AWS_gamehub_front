@@ -1,0 +1,35 @@
+﻿@model IEnumerable<AWS_gamehub_front.Models.Videogame>
+
+@{
+    ViewData["Title"] = "Videojuegos";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+<div class="videogame-header">
+    <i class="fa-solid fa-gamepad"></i>
+    <h1>Catálogo de Videojuegos</h1>
+</div>
+
+<div class="row g-4" style="margin-bottom: 2rem;">
+    @foreach (var item in Model)
+    {
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+            <div class="card flex-fill" style="background: #23272f; color: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.3); border: none;">
+                <div class="text-center mt-3">
+                    <img src="@Url.Content(item.Image)" alt="Portada" class="cover-img" style="width: 120px; height: 120px;" />
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="videogame-title text-center mb-2">
+                        <i class="fa-solid fa-star"></i> @item.title
+                    </h5>
+                    <div class="mt-auto text-center">
+                        <a class="details-link btn btn-outline-warning btn-sm mt-2" href="@Url.Action("Details", new { item.Id })">
+                            <i class="fa-solid fa-circle-info"></i> Detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

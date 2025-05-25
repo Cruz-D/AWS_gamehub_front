@@ -1,0 +1,113 @@
+﻿@model AWS_gamehub_front.Models.Videogame  
+@using AWS_gamehub_front.Models.DTOs  
+
+@{  
+   ViewData["Title"] = "Detalles";  
+}  
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />  
+
+<div class="videogame-header">  
+   <i class="fa-solid fa-gamepad"></i>  
+   <h1>Detalles del Videojuego</h1>  
+</div>  
+
+<div style="width: 90%; margin: 0 auto;">  
+   <div class="card p-4" style="width: 100%; background: #23272f; color: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);">  
+       <div class="text-center mb-4">  
+           <img src="@Model.Image" alt="Portada" class="cover-img" style="width: 200px; height: 200px;" />  
+       </div>  
+       <h2 class="videogame-title text-center mb-3">  
+           <i class="fa-solid fa-star"></i> @Model.title  
+       </h2>  
+       <div class="mb-3 text-center">  
+           <span class="genre-badge me-2"><i class="fa-solid fa-layer-group"></i> @Model.Genre</span>  
+           <span class="platform-badge"><i class="fa-solid fa-gamepad"></i> @Model.Platform</span>  
+       </div>  
+       <div class="mb-3">  
+           <h5 class="mb-1" style="color:#ffb347;"><i class="fa-solid fa-align-left"></i> Descripción</h5>  
+           <p>@Model.Description</p>  
+       </div>  
+       <div class="d-flex justify-content-between mt-4">  
+           <a class="btn btn-outline-light" href="@Url.Action("Index")">  
+               <i class="fa-solid fa-arrow-left"></i> Volver al listado  
+           </a>  
+       </div>  
+   </div>  
+</div>  
+
+<!-- Listado de Comentarios -->  
+@if (ViewBag.Comments != null && ((List<CommentDto>)ViewBag.Comments).Any())  
+{  
+   <div style="width: 90%; margin: 40px auto 0 auto;">  
+       <div class="card p-4 mb-4" style="width: 100%; background: #23272f; color: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);">  
+           <h4 class="mb-3" style="color:#ffb347;">  
+               <i class="fa-solid fa-comments"></i> Comentarios de usuarios  
+           </h4>  
+           @foreach (var comment in (List<CommentDto>)ViewBag.Comments)  
+           {  
+               <div class="mb-4 pb-3" style="border-bottom:1px solid #444;">  
+                   <div class="d-flex align-items-center mb-2">  
+                       <i class="fa-solid fa-user-circle me-2" style="font-size:1.5rem; color:#61dafb;"></i>  
+                       <span class="fw-bold">@comment.userName</span>  
+                       <span class="ms-auto genre-badge" style="background:#23272f; color:#ffb347; border:1px solid #ffb347;">  
+                           <i class="fa-solid fa-star"></i> @comment.score/10  
+                       </span>  
+                   </div>  
+                   <div style="white-space: pre-line;">@comment.content</div>  
+                   <div class="text-end" style="font-size:0.9em; color:#aaa;">  
+                   </div>  
+               </div>  
+           }  
+       </div>  
+   </div>  
+}  
+else  
+{  
+   <div style="width: 90%; margin: 40px auto 0 auto;">  
+       <div class="card p-4 mb-4" style="width: 100%; background: #23272f; color: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);">  
+           <h4 class="mb-3" style="color:#ffb347;">  
+               <i class="fa-solid fa-comments"></i> Comentarios de usuarios  
+           </h4>  
+           <div class="text-center text-muted">Aún no hay comentarios para este videojuego.</div>  
+       </div>  
+   </div>  
+}  
+
+<!-- Módulo de Comentarios y Valoraciones -->  
+<div style="width: 90%; margin: 40px auto 0 auto;">  
+   <div class="card p-4" style="width: 100%; background: #23272f; color: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);">  
+       <h4 class="mb-3" style="color:#ffb347;">  
+           <i class="fa-solid fa-comments"></i> Deja tu comentario y valoración  
+       </h4>
+        @{
+            var isLoggedIn = Context.Request.Cookies["AuthToken"] != null;
+        }
+
+        @if (isLoggedIn)
+        {
+            <form method="post" action="@Url.Action("AddComment", "Videogame", new { id = Model.Id })">
+                <div class="mb-3">
+                    <label for="commentContent" class="form-label">Comentario</label>
+                    <textarea class="form-control" id="commentContent" name="content" rows="3" maxlength="1000" required style="background:#23272f; color:#fff; border:1px solid #444;"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="commentScore" class="form-label">Valoración</label>
+                    <input type="number" class="form-control" id="commentScore" name="score" min="0" max="10" required style="background:#23272f; color:#fff; border:1px solid #444;">
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-outline-warning">
+                        <i class="fa-solid fa-paper-plane"></i> Enviar
+                    </button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="text-center text-muted">
+                Debes iniciar sesión para dejar un comentario y valoración.
+            </div>
+        }
+
+   </div>  
+</div>
