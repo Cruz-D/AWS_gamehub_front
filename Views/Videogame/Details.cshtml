@@ -81,7 +81,7 @@ else
            <i class="fa-solid fa-comments"></i> Deja tu comentario y valoración  
        </h4>
         @{
-            var isLoggedIn = Context.Request.Cookies["AuthToken"] != null;
+            var isLoggedIn = Context.Request.Cookies["jwt"] != null;
         }
 
         @if (isLoggedIn)

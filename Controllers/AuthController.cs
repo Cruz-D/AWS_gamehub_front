@@ -3,6 +3,7 @@ using AWS_gamehub_front.Models;
 using AWS_gamehub_front.Services.HttpServices;
 using System.Threading.Tasks;
 using AWS_gamehub_front.Models.DTOs;
+using NuGet.Common;
 
 namespace AWS_gamehub_front.Controllers
 {
@@ -35,18 +36,18 @@ namespace AWS_gamehub_front.Controllers
             try
             {
                 var loginResult = await _authService.LoginAsync(model);
-                //comentarios
+
                 if (loginResult != null && !string.IsNullOrEmpty(loginResult.accessToken))
                 {
-                    // Guardar el JWT en una cookie segura y httpOnly
-                    Response.Cookies.Append("jwt", loginResult.accessToken, new CookieOptions
+                    var token = loginResult.accessToken;
+
+                    // With the following code to store the token in a cookie:
+                    Response.Cookies.Append("jwt", token, new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = false, // Solo en HTTPS en producción
-                        SameSite = SameSiteMode.Strict,
-                        Expires = DateTime.UtcNow.AddHours(2)
+                        Secure = true, // Ensure this is true in production for HTTPS
+                        SameSite = SameSiteMode.Strict
                     });
-
 
                     // Redirigir a la página principal, dashboard, etc.
                     return RedirectToAction("Index", "Videogame");
@@ -99,7 +100,7 @@ namespace AWS_gamehub_front.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Logout()
         {
-            var token = Request.Cookies["AuthToken"];
+            var token = Request.Cookies["jwt"];
 
             if (string.IsNullOrEmpty(token))
             {
@@ -107,7 +108,7 @@ namespace AWS_gamehub_front.Controllers
                 return RedirectToAction("Index", "Videogame");
             }
 
-            Response.Cookies.Delete("AuthToken");
+            Response.Cookies.Delete("jwt");
             // Si guardas el nombre/email en otra cookie, bórrala también
             return RedirectToAction("Index", "Videogame");
         }

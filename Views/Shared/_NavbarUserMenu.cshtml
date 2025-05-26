@@ -1,6 +1,6 @@
 ﻿@{
     // Detectar si el usuario está logueado por la cookie
-    var isLoggedIn = Context.Request.Cookies["AuthToken"] != null;
+    var isLoggedIn = Context.Request.Cookies["jwt"] != null;
     // obtener nombre de usuario registrado
     var userName = isLoggedIn ? Context.Request.Cookies["UniqueName"] : "Invitado";
     }
