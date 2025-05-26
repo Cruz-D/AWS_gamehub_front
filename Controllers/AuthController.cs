@@ -45,7 +45,7 @@ namespace AWS_gamehub_front.Controllers
                     Response.Cookies.Append("jwt", token, new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = true, // Ensure this is true in production for HTTPS
+                        Secure = false, // Ensure this is true in production for HTTPS
                         SameSite = SameSiteMode.Strict
                     });
 
