@@ -29,5 +29,20 @@ namespace AWS_gamehub_front.Services.HttpServices
                 return null;
             }
         }
+
+        public async Task<bool> SendCommentAsync(SendCommentDTO commentDto)
+        {
+            try
+            {
+                var url = $"{_baseUrl}/";
+                var response = await _httpClient.PostAsJsonAsync(url, commentDto);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("error al crear comentario -----> " + ex);
+            }
+        }
     }
 }
